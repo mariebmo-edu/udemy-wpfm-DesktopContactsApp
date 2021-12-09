@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DesktopContactsApp.Classes {
-    class Contact {
+    public class Contact {
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

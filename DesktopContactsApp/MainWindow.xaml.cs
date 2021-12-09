@@ -41,7 +41,7 @@ namespace DesktopContactsApp {
 
             using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection( App.databasePath )) {
                 connection.CreateTable<Contact>();
-                contacts = connection.Table<Contact>().ToList();
+                contacts = (connection.Table<Contact>().ToList()).OrderBy(c => c.Name).ToList();
             }
 
             if (contacts != null) {
@@ -56,6 +56,16 @@ namespace DesktopContactsApp {
 
             contactsListView.ItemsSource = filteredList;
 
+        }
+
+        private void contactsListView_SelectionChanged( object sender, SelectionChangedEventArgs e ) {
+            Contact selectedContact = (Contact)contactsListView.SelectedItem;
+
+            if(selectedContact != null) {
+                ContactDetailsWindow contactDetailsWindow = new(selectedContact);
+                contactDetailsWindow.ShowDialog();
+                ReadDatabase();
+            }
         }
     }
 }
